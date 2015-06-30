@@ -75,13 +75,13 @@ import pt.webdetails.cda.services.Previewer;
 import org.pentaho.platform.api.engine.IPentahoSession;
 
 import org.pentaho.platform.engine.core.system.PentahoSessionHolder;
-import org.pentaho.platform.engine.security.SecurityHelper;
 
 import pt.webdetails.cda.utils.DoQueryParameters;
 import pt.webdetails.cpf.PluginEnvironment;
 import pt.webdetails.cpf.audit.CpfAuditHelper;
 import pt.webdetails.cpf.messaging.JsonGeneratorSerializable;
 import pt.webdetails.cpf.messaging.JsonResult;
+import pt.webdetails.cpf.session.PentahoSession;
 import pt.webdetails.cpf.utils.CharsetHelper;
 import pt.webdetails.cpf.utils.JsonHelper;
 import pt.webdetails.cpf.utils.MimeTypes;
@@ -444,7 +444,7 @@ public class CdaUtils {
     String msg = "Cache Cleared Successfully";
 
     // Check if user is admin
-    Boolean accessible = SecurityHelper.getInstance().isPentahoAdministrator( getPentahoSession() );
+    Boolean accessible = new PentahoSession().isAdministrator();
     if ( !accessible ) {
       msg = "Method clearCache not exposed or user does not have required permissions.";
 
