@@ -24,11 +24,10 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
 import org.json.JSONException;
-import org.pentaho.platform.engine.core.system.PentahoSessionHolder;
-import org.pentaho.platform.engine.security.SecurityHelper;
 
 import pt.webdetails.cda.services.CacheMonitor;
 import pt.webdetails.cda.utils.framework.JsonCallHandler;
+import pt.webdetails.cpf.session.PentahoSession;
 import pt.webdetails.cpf.utils.MimeTypes;
 
 @Path( "/{plugin}/api/cacheMonitor" )
@@ -124,7 +123,7 @@ public class CacheMonitorEndpoint {
   }
 
   private void checkAdminPermission() throws WebApplicationException {
-    if ( !SecurityHelper.getInstance().isPentahoAdministrator( PentahoSessionHolder.getSession() ) ) {
+    if ( !new PentahoSession().isAdministrator() ) {
       throw new WebApplicationException( Response.Status.FORBIDDEN );
     }
   }
